@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" >
+<log4j:configuration>
+
+	<!-- *********************************************************** -->
+	<!-- *********************** APPENDERS ************************* -->
+	<!-- *********************************************************** -->
+
+	<!-- This is the catch-all application log appender. -->
+	<appender name="FILE" class="org.apache.log4j.FileAppender">
+        <param name="File" value="reports/integration-test.log" />
+		<param name="Append" value="false" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy/MM/dd HH:mm:ss.SSS z}|%t|%p|%c{1}|%m%n" />
+		</layout>
+	</appender>
+
+    <!-- This is the catch-all application log appender. -->
+    <appender name="REQUESTLOGFILE" class="org.apache.log4j.FileAppender">
+        <param name="File" value="reports/httpClient.log" />
+        <param name="Append" value="false" />
+        <param name="Encoding" value="UTF-8" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy/MM/dd HH:mm:ss.SSS z}|%t|%p|%c{1}|%m%n" />
+        </layout>
+    </appender>
+
+
+    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+        <param name="Encoding" value="UTF-8" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy/MM/dd HH:mm:ss.SSS z}|%t|%p|%c{1}|%m%n" />
+        </layout>
+    </appender>
+
+
+	<!-- *********************************************************** -->
+	<!-- ************************ LOGGERS ************************** -->
+	<!-- *********************************************************** -->
+
+	
+	<!-- Keep httpunit quiet -->
+	<logger name="com.gargoylesoftware">
+		<level value="FATAL" />
+		<appender-ref ref="CONSOLE"/>
+		<appender-ref ref="FILE"/>
+	</logger>
+
+	<!-- Keep httpunit quiet -->
+	<logger name="org.apache.commons.httpclient">
+		<level value="FATAL" />
+		<appender-ref ref="CONSOLE"/>
+		<appender-ref ref="FILE"/>
+	</logger>
+
+	<!-- Keep httpunit quiet -->
+<!--	<logger name="httpclient">
+		<level value="FATAL" />
+		<appender-ref ref="CONSOLE"/>
+		<appender-ref ref="FILE"/>
+	</logger>
+	-->
+
+    <logger name="httpclient" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="REQUESTLOGFILE"/>
+    </logger>
+
+	
+	<!--logger name="com.att" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="FILE"/>
+    </logger>
+
+    <logger name="com.att" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="CONSOLE"/>
+	</logger-->
+
+	<root>
+        <level value="TRACE" />
+
+		<appender-ref ref="FILE"/>
+	</root>
+	
+</log4j:configuration>
+

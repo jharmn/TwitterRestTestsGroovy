@@ -1,0 +1,53 @@
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'idea'
+
+//build stuff
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+configurations {
+    cucumberRuntime {
+        extendsFrom testRuntime
+    }
+}
+
+task cucumber() {
+    dependsOn assemble
+    doLast {
+        javaexec {
+            main = "cucumber.cli.Main"
+            classpath = configurations.cucumberRuntime
+            args = ['-f', 'pretty', '--glue', 'src/test/groovy', 'src/test/resources']
+
+        }
+    }
+}
+
+
+dependencies {
+    // Groovy library for groovy building!
+    groovy 'org.codehaus.groovy:groovy-all:2.0.6'
+
+    /*
+   In order to work around a really flagrant bug ( http://issues.gradle.org/browse/GRADLE-732 )
+   You have to create a configuration that includes the jar.archivePath (the jar.archivePath is created by the java plugin)
+   and give it the same name as the cucumberRuntime configuration, or name it something different and have the cucumberRuntime
+   configuration extend from it as well.
+
+   VERY ANNOYING BUG
+    */
+    cucumberRuntime files("${jar.archivePath}")
+
+    testCompile 'junit:junit:4.10'
+    testCompile 'info.cukes:cucumber-junit:1.0.9'
+    testCompile 'info.cukes:cucumber-groovy:1.0.9'
+    testCompile 'log4j:log4j:1.2.17'
+    testCompile ('org.codehaus.groovy.modules.http-builder:http-builder:0.5.2') {
+        exclude(group: 'log4j', module: 'log4j')
+    }
+}
+
+repositories {
+    mavenCentral()
+}
