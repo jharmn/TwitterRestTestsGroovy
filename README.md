@@ -7,3 +7,8 @@ UPDATE: As far as I know, this sample will no longer run successfully, as this v
 
 Built to support the ideas in a PragmaticAPI.com blog post:
 http://www.pragmaticapi.com/blog/2013/01/21/bdd-atdd-for-your-agile-rest-api-part-2
+
+## Run tests
+```
+gradle cucumber
+```

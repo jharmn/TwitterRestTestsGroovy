@@ -27,16 +27,8 @@ task cucumber() {
 
 dependencies {
     // Groovy library for groovy building!
-    groovy 'org.codehaus.groovy:groovy-all:2.0.6'
+    compile 'org.codehaus.groovy:groovy-all:2.4.4'
 
-    /*
-   In order to work around a really flagrant bug ( http://issues.gradle.org/browse/GRADLE-732 )
-   You have to create a configuration that includes the jar.archivePath (the jar.archivePath is created by the java plugin)
-   and give it the same name as the cucumberRuntime configuration, or name it something different and have the cucumberRuntime
-   configuration extend from it as well.
-
-   VERY ANNOYING BUG
-    */
     cucumberRuntime files("${jar.archivePath}")
 
     testCompile 'junit:junit:4.10'
